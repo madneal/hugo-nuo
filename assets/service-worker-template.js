@@ -11,37 +11,15 @@ var filesToCache = [
   'icons/icon-192x192.png',
   'icons/icon-256x256.png',
   'icons/icon-512x512.png',
-  'images/avatar.png',
-  'images/grey-prism.svg',
-  'images/qrcode.jpg',
-  'styles/main-rendered.min.css',
-{{ with .Site.Params.customStyle }}'styles/custom.min.css',{{ end }}
-  'scripts/index.min.js',
-
-  // Google fonts
-  'https://fonts.googleapis.com/css?family=Lobster',
-  'https://fonts.gstatic.com/s/lobster/v20/neILzCirqoswsqX9zoKmM4MwWJU.woff2',
-
-{{ with .Site.Params.fontAwesome }}
-  // FontAwesome
-  'https://use.fontawesome.com/releases/v5.7.2/css/all.css',
-{{ else }}
-  // Iconfont
-  'https://at.alicdn.com/t/font_174169_qmgvd10zwbf.woff',
+  '{{ .Site.Params.avatar | default "images/avatar.png" }}',
+  '{{ .Site.Params.bg | default "images/grey-prism.svg" }}',
+{{ with .Site.Params.wechat }}  '{{ . }}',
+{{ else }}  'images/qrcode.jpg',
 {{ end }}
-  // smooth-scroll
-  'https://cdn.jsdelivr.net/npm/smooth-scroll@15.0.0/dist/smooth-scroll.min.js',
-
-  // medium-zoom
-  'https://cdn.jsdelivr.net/npm/medium-zoom@1.0.2/dist/medium-zoom.min.js',
-
-  // Video.js
-  'https://cdn.jsdelivr.net/npm/video.js@7.3.0/dist/video-js.min.css',
-  'https://cdn.jsdelivr.net/npm/video.js@7.3.0/dist/video.min.js',
-
-  // MathJax
-  'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML',
-  'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js?V=2.7.5',
+  'styles/main-rendered.min.css',
+{{ with .Site.Params.customStyle }}  'styles/custom.min.css',
+{{ end }}
+  'scripts/index.min.js',
 ];
 
 // Cache the application assets

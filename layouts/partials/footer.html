@@ -1,5 +1,4 @@
 {{- $script := resources.Get "scripts/index.js" | resources.Minify -}}
-{{- $serviceWorker := resources.Get "service-worker-template.js" | resources.ExecuteAsTemplate "service-worker.js" . -}}
 
 <!-- Site Footer -->
 <footer class="site-footer">
@@ -47,6 +46,8 @@
 <!-- Main Scripts -->
 <script src="{{ $script.RelPermalink }}"></script>
 
+{{ if .Site.Params.enableServiceWorker }}
+{{- $serviceWorker := resources.Get "service-worker-template.js" | resources.ExecuteAsTemplate "service-worker.js" . -}}
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('{{ $serviceWorker.RelPermalink }}').then(function() {
@@ -54,6 +55,26 @@
     });
   }
 </script>
+{{ else }}
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      registrations.forEach(function(registration) {
+        registration.unregister();
+      });
+    });
+  }
+  if ('caches' in window) {
+    caches.keys().then(function(keys) {
+      keys.forEach(function(key) {
+        if (key.indexOf('hugo-nuo-') === 0) {
+          caches.delete(key);
+        }
+      });
+    });
+  }
+</script>
+{{ end }}
 
 <!-- Google Analytics -->
 {{ if .Site.GoogleAnalytics }}
