@@ -1,0 +1,43 @@
+{{- $paginator := . -}}
+{{- if gt $paginator.TotalPages 1 -}}
+{{- $currentPage := $paginator.PageNumber -}}
+{{- $totalPages := $paginator.TotalPages -}}
+{{- $pageWindow := 2 -}}
+<footer class="list-footer">
+  <nav class="pagination" aria-label="Pagination">
+    <h3 class="offscreen">Pagination</h3>
+
+    {{- if $paginator.HasPrev -}}
+      <a class="pagination-previous" href="{{ $paginator.Prev.URL }}" rel="prev">← Newer Posts</a>
+    {{- else -}}
+      <span class="pagination-previous pagination-disabled">← Newer Posts</span>
+    {{- end -}}
+
+    <ol class="pagination-pages">
+      {{- range $paginator.Pagers -}}
+        {{- $pageNumber := .PageNumber -}}
+        {{- $isFirstPage := eq $pageNumber 1 -}}
+        {{- $isLastPage := eq $pageNumber $totalPages -}}
+        {{- $isNearCurrent := and (ge $pageNumber (sub $currentPage $pageWindow)) (le $pageNumber (add $currentPage $pageWindow)) -}}
+        {{- if or $isFirstPage $isLastPage $isNearCurrent -}}
+          <li>
+            {{- if eq $pageNumber $currentPage -}}
+              <span class="pagination-page pagination-current" aria-current="page">{{ $pageNumber }}</span>
+            {{- else -}}
+              <a class="pagination-page" href="{{ .URL }}">{{ $pageNumber }}</a>
+            {{- end -}}
+          </li>
+        {{- else if or (eq $pageNumber 2) (eq $pageNumber (sub $totalPages 1)) -}}
+          <li><span class="pagination-gap">...</span></li>
+        {{- end -}}
+      {{- end -}}
+    </ol>
+
+    {{- if $paginator.HasNext -}}
+      <a class="pagination-next" href="{{ $paginator.Next.URL }}" rel="next">Older Posts →</a>
+    {{- else -}}
+      <span class="pagination-next pagination-disabled">Older Posts →</span>
+    {{- end -}}
+  </nav>
+</footer>
+{{- end -}}
