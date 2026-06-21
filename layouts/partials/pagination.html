@@ -2,15 +2,13 @@
 {{- if gt $paginator.TotalPages 1 -}}
 {{- $currentPage := $paginator.PageNumber -}}
 {{- $totalPages := $paginator.TotalPages -}}
-{{- $pageWindow := 2 -}}
+{{- $pageWindow := 1 -}}
 <footer class="list-footer">
   <nav class="pagination" aria-label="Pagination">
     <h3 class="offscreen">Pagination</h3>
 
     {{- if $paginator.HasPrev -}}
-      <a class="pagination-previous" href="{{ $paginator.Prev.URL }}" rel="prev">← Newer Posts</a>
-    {{- else -}}
-      <span class="pagination-previous pagination-disabled">← Newer Posts</span>
+      <a class="pagination-previous" href="{{ $paginator.Prev.URL }}" rel="prev">← Newer</a>
     {{- end -}}
 
     <ol class="pagination-pages">
@@ -34,9 +32,7 @@
     </ol>
 
     {{- if $paginator.HasNext -}}
-      <a class="pagination-next" href="{{ $paginator.Next.URL }}" rel="next">Older Posts →</a>
-    {{- else -}}
-      <span class="pagination-next pagination-disabled">Older Posts →</span>
+      <a class="pagination-next" href="{{ $paginator.Next.URL }}" rel="next">Older →</a>
     {{- end -}}
   </nav>
 </footer>

@@ -1,62 +1,63 @@
 .pagination {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  min-height: calc(2.9rem + 2px);
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  color: $text-light;
+  font-size: $size-7;
 
   & a {
-    color: $text;
+    color: $text-light;
   }
 
   & .pagination-previous,
   & .pagination-next,
   & .pagination-page {
     display: inline-block;
-    padding: 1rem;
-    background-color: $white;
-    border: 1px solid $border;
-    font-size: 0.8rem;
-    line-height: 1;
-    text-transform: uppercase;
+    border-radius: $radius-small;
+    padding: 0.35rem 0.55rem;
+    line-height: 1.2;
+    text-align: center;
+    transition: color $speed $easing, background-color $speed $easing, border-color $speed $easing;
 
     &:focus,
     &:hover {
-      color: $white;
-      background-color: $primary;
-      border-color: $primary;
+      color: $primary;
+      background-color: $light;
     }
   }
 
-  & .pagination-disabled {
-    color: lighten($text, 35%);
-    cursor: default;
+  & .pagination-previous,
+  & .pagination-next {
+    min-width: 0;
+    padding-right: 0.35rem;
+    padding-left: 0.35rem;
   }
 
   & .pagination-gap {
     display: inline-block;
-    min-width: 1.5rem;
-    padding: 1rem 0.25rem;
-    color: lighten($text, 35%);
-    font-size: 0.8rem;
-    line-height: 1;
+    min-width: 1rem;
+    padding: 0.35rem 0.1rem;
+    color: $grey-light;
+    line-height: 1.2;
     text-align: center;
   }
 
   & .pagination-pages {
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.35rem;
+    gap: 0.2rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   & .pagination-page {
-    min-width: 2.9rem;
-    text-align: center;
+    min-width: 1.75rem;
+    border: 1px solid transparent;
   }
 
   & .pagination-current {
@@ -66,16 +67,8 @@
   }
 
   @media (max-width: 480px) {
-    justify-content: center;
-
-    & .pagination-previous,
-    & .pagination-next {
-      flex: 1 1 calc(50% - 0.5rem);
-      text-align: center;
-    }
-
     & .pagination-pages {
-      order: 3;
+      order: 2;
       flex-basis: 100%;
     }
   }
