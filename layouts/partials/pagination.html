@@ -2,6 +2,7 @@
 {{- if gt $paginator.TotalPages 1 -}}
 {{- $currentPage := $paginator.PageNumber -}}
 {{- $totalPages := $paginator.TotalPages -}}
+{{- $totalPosts := $paginator.TotalNumberOfElements -}}
 {{- $pageWindow := 2 -}}
 <footer class="list-footer">
   <nav class="pagination" aria-label="Pagination">
@@ -13,25 +14,30 @@
       <span class="pagination-previous pagination-disabled">← Newer Posts</span>
     {{- end -}}
 
-    <ol class="pagination-pages">
-      {{- range $paginator.Pagers -}}
-        {{- $pageNumber := .PageNumber -}}
-        {{- $isFirstPage := eq $pageNumber 1 -}}
-        {{- $isLastPage := eq $pageNumber $totalPages -}}
-        {{- $isNearCurrent := and (ge $pageNumber (sub $currentPage $pageWindow)) (le $pageNumber (add $currentPage $pageWindow)) -}}
-        {{- if or $isFirstPage $isLastPage $isNearCurrent -}}
-          <li>
-            {{- if eq $pageNumber $currentPage -}}
-              <span class="pagination-page pagination-current" aria-current="page">{{ $pageNumber }}</span>
-            {{- else -}}
-              <a class="pagination-page" href="{{ .URL }}">{{ $pageNumber }}</a>
-            {{- end -}}
-          </li>
-        {{- else if or (eq $pageNumber 2) (eq $pageNumber (sub $totalPages 1)) -}}
-          <li><span class="pagination-gap">...</span></li>
+    <div class="pagination-center">
+      <p class="pagination-summary">
+        Page {{ $currentPage }} of {{ $totalPages }} · {{ $totalPosts }} {{ cond (eq $totalPosts 1) "post" "posts" }}
+      </p>
+      <ol class="pagination-pages">
+        {{- range $paginator.Pagers -}}
+          {{- $pageNumber := .PageNumber -}}
+          {{- $isFirstPage := eq $pageNumber 1 -}}
+          {{- $isLastPage := eq $pageNumber $totalPages -}}
+          {{- $isNearCurrent := and (ge $pageNumber (sub $currentPage $pageWindow)) (le $pageNumber (add $currentPage $pageWindow)) -}}
+          {{- if or $isFirstPage $isLastPage $isNearCurrent -}}
+            <li>
+              {{- if eq $pageNumber $currentPage -}}
+                <span class="pagination-page pagination-current" aria-current="page">{{ $pageNumber }}</span>
+              {{- else -}}
+                <a class="pagination-page" href="{{ .URL }}">{{ $pageNumber }}</a>
+              {{- end -}}
+            </li>
+          {{- else if or (eq $pageNumber 2) (eq $pageNumber (sub $totalPages 1)) -}}
+            <li><span class="pagination-gap">...</span></li>
+          {{- end -}}
         {{- end -}}
-      {{- end -}}
-    </ol>
+      </ol>
+    </div>
 
     {{- if $paginator.HasNext -}}
       <a class="pagination-next" href="{{ $paginator.Next.URL }}" rel="next">Older Posts →</a>
