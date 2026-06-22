@@ -78,6 +78,7 @@
 
 <!-- Google Analytics -->
 {{ if .Site.Config.Services.GoogleAnalytics.ID }}
+{{/* Hugo's built-in Google Analytics template emits async gtag.js; this is not a site page. */}}
 {{ template "_internal/google_analytics.html" . }}
 {{ end }}
 
